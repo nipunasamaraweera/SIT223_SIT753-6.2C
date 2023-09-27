@@ -10,6 +10,7 @@ pipeline{
                     mail to: "thathsarasamaraweera16@gmail.com",
                     subject: "Build Status Email",
                     body: "Build log attached!"
+                    attachlog : true
                 }
             }
         }
