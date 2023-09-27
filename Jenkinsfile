@@ -1,43 +1,73 @@
 pipeline{
     agent any
     stages{
-        stage("Build"){
+        stage('Build'){
             steps{
-                echo "Building ..."
+                echo "Build the code using a build automation tool to compile and package the code"
+                echo "Tool : Maven"
+            }
+        }
+        stage('Unit and Integration Tests'){
+            steps{
+                echo "run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected"
+                echo "Tools : JUnit for unit tests and Selenium for integration tests"
             }
             post {
-    success {
-        emailext body: "build successful",
-        to: "thathsarasamaraweera16@gmail.com",
-        subject: "Build log attached!",
-        attachLog: true
-    }
-    failure {
-        emailext body: "build failed",
-        to: "thathsarasamaraweera16@gmail.com",
-        subject: "Build log attached!",
-        attachLog: true
-    }
-}
-        }
-        stage("Test"){
-            steps{
-                echo "Testing ..."
-                echo "static code analysis by SonarQube"
-                echo "Automataion testing by maven"
-                echo "Running unit testing by Junit testing"
-                echo "Running Security testing by OWASP ZAP"
+                success {
+                    emailext body: 'Test stage completed successfully.',
+                             to: 'thathsarasamaraweera16@gmail.com',
+                             subject: 'Test Stage Successful',
+                             attachLog: true
+                    
+                }
+                failure {
+                    emailext body: 'Test stage failed.',
+                             to: 'thathsarasamaraweera16@gmail.com',
+                             subject: 'Test Stage Failed',
+                             attachLog: true
+                }
             }
         }
-        stage("Deploy"){
+        stage('Code Analysis'){
             steps{
-                echo "Deploying ..."
-                echo " Deploying into AWS E2C"
+                echo "Integrate a code analysis tool to analyse the code and ensure it meets industry standards"
+                echo "Tools : Jenkins with SonarQube and Checkmarx"
             }
         }
-        stage("Complete"){
+        stage(' Security Scan'){
             steps{
-                echo "Completed."
+                echo "Perform a security scan on the code using a tool to identify any vulnerabilities"
+                echo "Tools : OWASP ZAP (Zed Attack Proxy) "
+            }
+            post {
+                success {
+                    emailext (
+                        to: 'thathsarasamaraweera16@gmail.com',
+                        subject: 'Security Scan Successful',
+                        body: 'Security scan completed successfully.',
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext (
+                        to: 'thathsarasamaraweera16@gmail.com',
+                        subject: 'Security Scan Failed',
+                        body: 'Security scan failed.',
+                        attachLog: true
+                    )
+                }
+            }
+        }
+        stage('Integration Tests on Staging'){
+            steps{
+                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment."
+                echo "Tools : Selenium WebDriver"
+            }
+        }
+        stage('Deploy to Production'){
+            steps{
+                echo "Deploy the application to a production server"
+                echo "Tools : AWS Elastic Beanstalk"
             }
         }
     }
