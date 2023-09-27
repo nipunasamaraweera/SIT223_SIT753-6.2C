@@ -3,13 +3,13 @@ pipeline{
     stages{
         stage('Build'){
             steps{
-                echo "Build the code using a build automation tool to compile and package the code"
+                echo "Build the code using a build automation tool"
                 echo "Tool : Maven"
             }
         }
         stage('Unit and Integration Tests'){
             steps{
-                echo "run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected"
+                echo "run unit tests to ensure the code functions as expected"
                 echo "Tools : JUnit for unit tests and Selenium for integration tests"
             }
             post {
@@ -60,7 +60,7 @@ pipeline{
         }
         stage('Integration Tests on Staging'){
             steps{
-                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment."
+                echo "Run integration tests on the staging environment to ensure the application functions as expected."
                 echo "Tools : Selenium WebDriver"
             }
         }
