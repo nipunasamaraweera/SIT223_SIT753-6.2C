@@ -15,7 +15,7 @@ pipeline{
             post {
                 success {
                     emailext body: 'Test stage completed successfully.',
-                             to: 'thathsarasamaraweera16@gmail.com'
+                             to: 'thathsarasamaraweera16@gmail.com',
                              subject: 'Test Stage Successful',
                              attachLog: true
                     
